@@ -28,8 +28,8 @@ def recommend_movies(movie_id: str):
 
     recommended_movies = [
         {
-            "movie_id": main_df.loc[item[0]].id.item(),
-            "movie_name": main_df.loc[item[0]].title,
+            "id": main_df.loc[item[0]].id.item(),
+            "title": main_df.loc[item[0]].title,
             # "movie_index": item[0],
             # "movie_similarity": item[1].item(),
         }
