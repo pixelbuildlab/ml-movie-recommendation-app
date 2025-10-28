@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from typing import Any
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from app.list_movies import list_movies
 from app.movie_recommendation import recommend_movies
@@ -8,6 +10,18 @@ from app.constants import APP_TAGS, TAGS_METADATA
 app = FastAPI(
     title="Movie Recommendation API",
     openapi_tags=TAGS_METADATA,
+)
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
