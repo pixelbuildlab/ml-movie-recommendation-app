@@ -1,5 +1,6 @@
 import React from 'react'
 import ExternalLinkSvg from './components/ExternalLinkSvg'
+import MovieListCard from './components/MovieListCard'
 import type { Movie, MovieData } from './types'
 
 type Props = { onClear: () => void; selectedMovie: Movie }
@@ -93,55 +94,22 @@ function RecommendMovies({ onClear, selectedMovie }: Props) {
       <h3 style={{ marginBottom: '10px', marginTop: '10px', color: '#e0e0e0' }}>
         Recommended Movies
       </h3>
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          width: '60%',
-        }}
-      >
-        {movies?.map((movie) => (
-          <div
-            key={movie.id}
-            style={{
-              backgroundColor: '#2b2b2b',
-              padding: '10px 15px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '20px',
-              borderRadius: '6px',
-              color: '#f3f3f3',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'background-color 0.2s ease, transform 0.2s ease',
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#383838')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = '#2b2b2b')
-            }
-          >
-            <p>{movie.title}</p>
-
-            <a
-              style={{
-                color: 'unset',
-                textDecoration: 'none',
-              }}
-              target='_blank'
-              rel='noopener noreferrer'
-              href={`https://www.themoviedb.org/movie/${movie.id}`}
-            >
-              <ExternalLinkSvg />
-            </a>
-          </div>
-        ))}
-      </div>
-
+      {isLoaded && movies?.length ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+            width: '60%',
+          }}
+        >
+          {movies?.map((movie) => (
+            <MovieListCard movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <p>App Loading</p>
+      )}
       <button
         onClick={onClear}
         style={{

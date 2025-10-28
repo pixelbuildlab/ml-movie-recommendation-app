@@ -1,5 +1,5 @@
 import React from 'react'
-import ExternalLinkSvg from './ExternalLinkSvg'
+import MovieListCard from './MovieListCard'
 import type { Movie, MovieData } from '../types'
 
 type Props = {
@@ -56,6 +56,10 @@ function MoviesList({ search, onSelect }: Props) {
     }
   }, [movies, search.filter, search.value])
 
+  if (!isLoaded || !movies?.length) {
+    return <p>App Loading</p>
+  }
+
   return (
     <div
       style={{
@@ -66,45 +70,10 @@ function MoviesList({ search, onSelect }: Props) {
       }}
     >
       {filterMovies?.map((movie) => (
-        <div
-          onClick={() => {
-            onSelect(movie)
-          }}
-          key={movie.id}
-          style={{
-            backgroundColor: '#2b2b2b',
-            padding: '10px 15px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '20px',
-            borderRadius: '6px',
-            color: '#f3f3f3',
-            textDecoration: 'none',
-            cursor: 'pointer',
-            transition: 'background-color 0.2s ease, transform 0.2s ease',
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = '#383838')
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = '#2b2b2b')
-          }
-        >
-          <p>{movie.title}</p>
-
-          <a
-            style={{
-              color: 'unset',
-              textDecoration: 'none',
-            }}
-            target='_blank'
-            rel='noopener noreferrer'
-            href={`https://www.themoviedb.org/movie/${movie.id}`}
-          >
-            <ExternalLinkSvg />
-          </a>
-        </div>
+        <MovieListCard
+          movie={movie}
+          onClick={() => onSelect(movie)}
+        />
       ))}
     </div>
   )
